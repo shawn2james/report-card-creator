@@ -78,6 +78,8 @@ class Window(QMainWindow):
             self.subjectsInput.clear()
             subject = content.strip("\n").title()
             if(subject not in self.subjects):
+                if(len(subject)<=2):
+                    subject = content.strip("\n").upper()
                 self.subjects.append(subject)
 
                 max_marks_label = QLabel(f"Enter maximum marks for {subject}: ", self) 
@@ -88,7 +90,6 @@ class Window(QMainWindow):
                 max_marks_option.addItem("80")
                 row = 3 + self.subjects.index(subject)
                 self.formLayout.insertRow(row, max_marks_label, max_marks_option)
-                print(self.subjects)
                 self.validate()
 
     def get_excel_path(self):

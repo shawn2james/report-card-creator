@@ -14,47 +14,45 @@ def get_sheet(excel_path):
     sheet = sheet[1:]
     sheet.columns = header
 
-    cols_to_drop = ["sl no", "sl no.", "Sl No", "Sl No.", "Sl no", "Sl no.", "SL NO", "SL NO.", 
-                    "adm no", "adm no.", "Adm no", "Adm no.", "Adm No", "Adm No.", "ADM NO", "ADM NO.", "ADMISSION NO", "ADMISSION NO."]
-    sheet = sheet.drop(cols_to_drop, axis=1, errors="ignore")
+    # cols_to_drop = ["sl no", "sl no.", "Sl No", "Sl No.", "Sl no", "Sl no.", "SL NO", "SL NO.", 
+    #                 "adm no", "adm no.", "Adm no", "Adm no.", "Adm No", "Adm No.", "ADM NO", "ADM NO.", "ADMISSION NO", "ADMISSION NO."]
+    # sheet = sheet.drop(cols_to_drop, axis=1, errors="ignore")
     return sheet
 
 
 def save_files(showGrades, convertToPdf, excel_path, save_dir, class_name, subjects, subject_details) :
     # Get excel sheet
     sheet = get_sheet(excel_path)
-    print(sheet)
 
     # looping through each student
     for _, row in sheet.iterrows():
         full_name = row["Full name"]
         row = row.drop("Full name")
-        print(full_name)
-        print(row)
-        print()
         marks = subject_details
-        subjects_in_sheet = row.index
+        subjects_in_sheet = list(row.index)
 
         for subject in subjects:
-            for i in range(len(subjects_in_sheet)):
-                if(subjects_in_sheet[i].upper()[:2] == "SS"):
-                    subject_match = "Social Science" in subjects or "Ss" in subjects
-                elif(subjects_in_sheet[i].upper()[:2] == "IT"):
-                    subject_match = "Information Technology" in subjects or "It" in subjects
-                else:
-                    subject_match = subjects_in_sheet[i].lower().startswith(subject.lower()[:3])
+            for subject_in_sheet in subjects_in_sheet:
+                subject_match = subject_in_sheet.lower().startswith(subject.lower()[:3])
+
+                if(subject_in_sheet.upper()[:2] == "SS"):
+                    if(subject in "SS Social Science Social Studies"):
+                        subject_match = True
+                if(subject_in_sheet.upper()[:2] == "IT"):
+                    if(subject=="Information Technology" or subject=="IT"):
+                        subject_match = True
 
                 if subject_match:
-                    mark = row[i]
+                    mark = row[subjects_in_sheet.index(subject_in_sheet)]
                     mark_to_insert = " "; 
                     grade = " ";
                     if(str(mark) not in "----                     nan"):
                         mark = int(mark)
                         mark_to_insert = mark
                         if showGrades:
-                            grade = get_grade(mark, marks[i][2])
+                            grade = get_grade(mark, marks[subjects.index(subject)][2])
 
-                    marks[i][1], marks[i][3]= mark_to_insert, grade
+                    marks[subjects.index(subject)][1], marks[subjects.index(subject)][3]= mark_to_insert, grade
 
         # adding document headings
         doc = Document()
