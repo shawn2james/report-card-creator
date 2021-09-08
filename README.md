@@ -27,4 +27,5 @@ A simple GUI made using Python that creates a report card for each student in an
 * docx module
 * docx2pdf module
 * Microsoft Excel
-	* Google Sheets
+* Microsoft Word
+* Google Sheets
