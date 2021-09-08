@@ -18,4 +18,4 @@ Specifications for the Excel sheet:<br>
 <img src="gui-screenshot.png" style="width: 50%; height: 70%;">
 
 ### A sample Excel Sheet that would work with this program
-<img src="excel-screenshot.png" style="width: 60%; height: 60%;">
+<img src="excel-screenshot.png" style="width: 80%; height: 70%;">
