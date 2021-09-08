@@ -1,5 +1,5 @@
 # Report Card Creator
-A simple GUI made using Python that creates a report card for each student in an excel sheet of a certain format given the following info:
+A simple GUI made using Python that creates a report card for each student in an excel sheet (made it to help my mom) of a certain format given the following info:
 	- Excel File
 	- Directory to save the report card files
 	- Class name
