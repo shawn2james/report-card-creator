@@ -12,6 +12,16 @@ A simple GUI made using Python that creates a report card for each student in an
 * The row containing the column names (Full name, subjects...) should be the 2nd row. The 1st row can contain another heading like the class name or can be left empty.<br>
 * The column containing the students' names should have a name of "Full name".<br>
 * No two subjects should have the same first three letters.<br>
+
+**To Run**:
+* Run the app.exe file OR
+* Using Python file:
+Run the following commands in terminal/command prompt after navigating to the downloaded folder
+
+```
+pip install -r requirements.txt
+python app.py
+```
 	
 
 ### GUI
