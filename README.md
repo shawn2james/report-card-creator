@@ -9,4 +9,4 @@ A simple GUI made using Python that creates a report card for each student in an
 	- Do you want to convert the report card .docx files to PDFs?
 
 ### GUI
-<img src="screenshot.png">
+<img src="screenshot.png" style="transform: scale(0.6)">
