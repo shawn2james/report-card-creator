@@ -33,7 +33,8 @@ def save_files(showGrades, convertToPdf, excel_path, save_dir, class_name, subje
 
         for subject in subjects:
             for subject_in_sheet in subjects_in_sheet:
-                subject_match = subject_in_sheet.lower().startswith(subject.lower()[:3])
+                print(subject_in_sheet)
+                subject_match = subject_in_sheet.lower() == subject.lower()
 
                 if(subject_in_sheet.upper()[:2] == "SS"):
                     if(subject in "SS Social Science Social Studies"):
@@ -41,7 +42,6 @@ def save_files(showGrades, convertToPdf, excel_path, save_dir, class_name, subje
                 if(subject_in_sheet.upper()[:2] == "IT"):
                     if(subject=="Information Technology" or subject=="IT"):
                         subject_match = True
-
                 if subject_match:
                     mark = row[subjects_in_sheet.index(subject_in_sheet)]
                     mark_to_insert = " "; 
@@ -56,7 +56,7 @@ def save_files(showGrades, convertToPdf, excel_path, save_dir, class_name, subje
 
         # adding document headings
         doc = Document()
-        school = doc.add_heading("St. Thomas HSS, Nadavayal", 0)
+        school = doc.add_heading("Nirmala HS Kabanigiri", 0)
         school.alignment = 1
         heading2 = doc.add_heading("First Terminal Evaluation", 0)
         heading2.alignment = 1
@@ -69,7 +69,7 @@ def save_files(showGrades, convertToPdf, excel_path, save_dir, class_name, subje
         name_of_student.font.size = Pt(16)
 
         # creating table and adding column headings
-        rows = 9
+        rows = 10
         cols = 4 if showGrades else 3
         table = doc.add_table(rows=rows, cols=cols)
         table.style = "TableGrid"

@@ -76,7 +76,7 @@ class Window(QMainWindow):
         content = self.subjectsInput.toPlainText()
         if "\n" in content:
             self.subjectsInput.clear()
-            subject = content.strip("\n").title()
+            subject = content.strip("\n")
             if(subject not in self.subjects):
                 if(len(subject)<=2):
                     subject = content.strip("\n").upper()
@@ -127,4 +127,4 @@ if __name__ == "__main__":
   
     window = Window()
     window.show()
-    sys.exit(app.exec_())   
+    sys.exit(app.exec_())
