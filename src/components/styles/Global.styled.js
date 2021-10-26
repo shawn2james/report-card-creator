@@ -16,8 +16,8 @@ const GlobalStyles = createGlobalStyle`
 	}
 
 	form {
-		font-size: 25px;
-		margin: 0 200px;
+		font-size: 20px;
+		margin: 0 70px;
 	}
 `
 

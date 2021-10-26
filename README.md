@@ -1,41 +1,70 @@
-# Report Card Creator
-A simple GUI made using Python that creates a report card for each student in an excel sheet (made it to help my mom) of a certain format given **the following info:**<br>
-* Excel File<br>
-* Directory to save the report card files<br>
-* Class name<br>
-* Subjects<br>
-* Maximum marks for each subject<br>
-* Do you want grades to be generated automatically in the report cards?<br>
-* Do you want to convert the report card .docx files to PDFs?<br>
+# Getting Started with Create React App
 
-**Specifications for the Excel sheet:**<br>
-* The row containing the column names (Full name, subjects...) should be the 2nd row. The 1st row can contain another heading like the class name or can be left empty.<br>
-* The column containing the students' names should have a name of "Full name".<br>
-* No two subjects should have the same first three letters.<br>
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-**To Run**:
-* Run the app.exe file OR
-* Using Python file:
-Run the following commands in terminal/command prompt after navigating to the downloaded folder
+## Available Scripts
 
-```
-pip install -r requirements.txt
-python app.py
-```
-	
+In the project directory, you can run:
 
-### GUI
-<img src="gui-screenshot.png" style="width: 50%; height: 70%;">
+### `npm start`
 
-### A sample Excel Sheet that would work with this program
-<img src="excel-screenshot.png" style="width: 80%; height: 70%;">
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Tech Stack used:
-* Python 
-* PyQt5 module
-* Pandas module
-* docx module
-* docx2pdf module
-* Microsoft Excel
-* Microsoft Word
-* Google Sheets
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
