@@ -1,90 +1,83 @@
-import { useState } from 'react';
+import React from 'react';
 import StyledForm from "./styles/Form.styled";
-import axios from 'axios';
+import readXlsxFile from 'read-excel-file';
+import RestOfTheForm from './RestOfTheForm';
 
+class Form extends React.Component {
+	constructor() {
+		super();
 
-var xlsx = require('xlsx');
-
-const Form = () => {
-	const [file, setFile] = useState(undefined);
-	const [subjects, setSubjects] = useState([]);
-
-	const uploadFile = (e) => {
-		const data = new FormData();
-		data.append('file', e.target.files[0]);
-		axios.post("http://localhost:3001/spreadsheet", data)
-			.then(res => {
-				console.log(res.statusText)
-			})
-		setFile("../uploads/spreadsheet.xlsx");
+		this.state = {
+			uploadText: null,
+			file: null,
+			students: [],
+			subjects: [],
+			userSubjects: [],
+			marks: []
+		}
 	}
 
-	const logFile = () => {
-		axios.get("http://localhost:3001")
-			.then((req, res) => {
-				let data = [];
-				const workbook = xlsx.read(req.data);
-				const temp = xlsx.reader.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]]);
-				temp.forEach(result => {
-					data.push(result);
+	uploadFile = (e) => {
+		this.setState({ uploadText: <span>Uploading...</span> }, () => {
+			console.log("reading file...")
+			readXlsxFile(e.target.files[0])
+				.then(data => {
+					const firstValues = data.map(row => row[0]);
+					const newStudents = firstValues.slice(1);
+
+					const newMarks = data.map(row => row.slice(1)).slice(1);
+
+					this.setState({
+						file: data,
+						students: newStudents,
+						subjects: data[0].slice(1),
+						userSubjects: data[0].slice(1),
+						marks: newMarks
+					}, () => {
+						this.setState({ uploadText: null })
+					})
 				})
-				console.log(data);
-			})
-
+		})
 	}
 
-	return (
-		<StyledForm encType="multipart/form-data">
-			<fieldset>
-				<legend>CREATE</legend>
-				<div className="form-container" id="spreadsheet-container">
-					<label htmlFor="spreadsheet">Select spreadsheet:</label>
-					<input type="file" name="fileInput" id="spreadsheet" onChange={uploadFile} required />
-					<button onClick={logFile}>Click</button>
-				</div>
+	render() {
+		let restOfTheForm = null;
 
-				<div className="form-container" id="schoolName-container">
-					<label htmlFor="schoolName">Enter school name:</label>
-					<input type="text" id="schoolName" required />
-				</div>
-
-				<div className="form-container" id="className-container">
-					<label htmlFor="className">Enter class name:</label>
-					<input type="text" id="className" required />
-				</div>
-
-				<div className="form-container">
-					<h3>Subjects</h3>
-					<div id="subjects-container">
-						<div className="subject-container">
-							<label htmlFor="english">English</label>
-							<input type="checkbox" id="english" className="subject" required />
-						</div>
-						<div className="subject-container">
-							<label htmlFor="maths">Maths</label>
-							<input type="checkbox" id="maths" className="subject" required />
-						</div>
-						<div className="subject-container">
-							<label htmlFor="social-studies">Social Studies</label>
-							<input type="checkbox" id="social-studies" className="subject" required />
-						</div>
-						<div className="subject-container">
-							<label htmlFor="hindi">Hindi</label>
-							<input type="checkbox" id="hindi" className="subject" required />
-						</div>
-						<div className="subject-container">
-							<label htmlFor="malayalam-i">Malayalam I</label>
-							<input type="checkbox" id="malayalam-i" className="subject" required />
-						</div>
-						<div className="subject-container">
-							<label htmlFor="malayalam-ii">Malayalam II</label>
-							<input type="checkbox" id="malayalam-ii" className="subject" required />
-						</div>
+		if (this.state.file) {
+			restOfTheForm = (
+				<>
+					<div className="form-container" id="school-name-container">
+						<label htmlFor="schoolName">Enter school name:</label>
+						<input type="text" id="schoolName" required />
 					</div>
-				</div>
-			</fieldset>
-		</StyledForm >
-	)
+
+					<div className="form-container" id="class-name-container">
+						<label htmlFor="className">Enter class name:</label>
+						<input type="text" id="className" required />
+					</div>
+
+					<RestOfTheForm students={this.state.students} subjects={this.state.subjects} marks={this.state.marks} />
+				</>
+			);
+		} else {
+			restOfTheForm = null;
+		}
+
+		return (
+			<StyledForm encType="multipart/form-data" >
+				<fieldset>
+					<legend>CREATE</legend>
+					<div className="form-container" id="spreadsheet-container">
+						<label htmlFor="spreadsheet">Select spreadsheet:</label>
+						<input type="file" name="fileInput" id="spreadsheet" onChange={this.uploadFile} required />
+						{this.state.uploadText}
+					</div>
+
+					{restOfTheForm}
+				</fieldset>
+			</StyledForm >
+		)
+	}
 }
 
 export default Form;

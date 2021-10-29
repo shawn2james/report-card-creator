@@ -19,6 +19,10 @@ const GlobalStyles = createGlobalStyle`
 		font-size: 20px;
 		margin: 0 70px;
 	}
+
+	.title {
+		padding: 20px 0;
+	}
 `
 
 export default GlobalStyles;
