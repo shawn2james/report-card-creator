@@ -1,6 +1,11 @@
 import React from "react";
 import Subjects from "./Subjects";
 import Students from "./Students";
+import {
+	Document, Packer, Paragraph,
+	AlignmentType, TextRun, Table, TableRow, TableCell
+} from "docx";
+import { saveAs } from "file-saver";
 
 class RestOfTheForm extends React.Component {
 	constructor(props) {
@@ -34,8 +39,6 @@ class RestOfTheForm extends React.Component {
 			}
 		})
 
-		console.log(userMarks);
-
 		// get marks of selected subjects only
 		userMarks = userMarks.map(markRow => {
 			const newMarkRow = [];
@@ -48,7 +51,206 @@ class RestOfTheForm extends React.Component {
 			return newMarkRow;
 		})
 
-		console.log(userMarks);
+		return userMarks;
+	}
+
+	getMaxMarks = () => {
+		let maxMarks = [];
+
+		this.state.userSubjects.forEach(subject => {
+			const ele = document.querySelector(`#max-marks-${subject.replace(" ", "-")}`);
+			maxMarks.push(ele.value);
+		})
+
+		return maxMarks;
+	}
+
+	createDocument = () => {
+		const schoolName = document.querySelector("#school-name").value;
+		const secondaryHeading = document.querySelector("#secondary-heading").value;
+		const className = document.querySelector("#class-name").value;
+		// const marks = this.getMarks();
+		// const maxMarks = this.getMaxMarks();
+
+		console.log(schoolName, secondaryHeading, className);
+
+		const schoolNameDoc = new Paragraph({
+			children: [
+				new TextRun({
+					text: schoolName,
+					bold: true,
+					size: 60,
+					font: "Ubuntu"
+				})
+			],
+			alignment: AlignmentType.CENTER,
+			spacing: {
+				after: 500
+			}
+		})
+
+		const secondaryHeadingDoc = new Paragraph({
+			children: [
+				new TextRun({
+					text: secondaryHeading,
+					size: 55,
+					font: "Ubuntu",
+				})
+			],
+			alignment: AlignmentType.CENTER,
+			spacing: {
+				after: 500
+			}
+		})
+
+		const classNameDoc = new Paragraph({
+			children: [
+				new TextRun({
+					text: className,
+					size: 40,
+					font: "Ubuntu"
+				})
+			],
+			alignment: AlignmentType.CENTER,
+			spacing: {
+				after: 800
+			}
+		})
+
+		const studentNameDoc = new Paragraph({
+			children: [
+				new TextRun({
+					text: `Name of the student: Shawn James`,
+					size: 35,
+					font: "Ubuntu"
+				})
+			]
+		})
+
+		// const tableDoc = new Table({
+		// 	rows: [
+		// 		new TableRow({
+		// 			children: [
+		// 				new TableCell({
+		// 					children: [
+		// 						new Paragraph({
+		// 							text: "Subject",
+		// 							bold: true,
+		// 							alignment: AlignmentType.CENTER,
+		// 							size: 30,
+		// 						})
+		// 					]
+		// 				}),
+		// 				new TableCell({
+		// 					children: [
+		// 						new Paragraph({
+		// 							text: "Subject",
+		// 							bold: true,
+		// 							alignment: AlignmentType.CENTER,
+		// 							size: 30,
+		// 						})
+		// 					]
+		// 				}),
+		// 				new TableCell({
+		// 					children: [
+		// 						new Paragraph({
+		// 							text: "Subject",
+		// 							bold: true,
+		// 							alignment: AlignmentType.CENTER,
+		// 							size: 30,
+		// 						})
+		// 					]
+		// 				}),
+		// 			]
+		// 		})
+		// 	]
+		// })
+
+		const table = new Table({
+			rows: [
+				new TableRow({
+					children: [
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+					],
+				}),
+				new TableRow({
+					children: [
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+							rowSpan: 2,
+						}),
+					],
+				}),
+				new TableRow({
+					children: [
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [new Paragraph("Hello")],
+						}),
+						new TableCell({
+							children: [],
+						}),
+					],
+				}),
+				new TableRow({
+					children: [
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+						new TableCell({
+							children: [],
+						}),
+					],
+				}),
+			],
+		});
+		const doc = new Document({
+			sections: [{
+				children: [
+					schoolNameDoc,
+					secondaryHeadingDoc,
+					classNameDoc,
+					studentNameDoc,
+					table
+				]
+			}]
+		})
+
+		Packer.toBlob(doc).then(blob => {
+			console.log("lkjsdflkjasdf;");
+			saveAs(blob, "test.docx");
+		})
 	}
 
 	render = () => (
@@ -56,7 +258,7 @@ class RestOfTheForm extends React.Component {
 			<Students students={this.props.students} manageChange={this.editStudents} />
 			<Subjects subjects={this.props.subjects} userSubjects={this.state.userSubjects} manageChange={this.editSubjects} />
 
-			<input type="submit" id="submit-btn" value="Confirm" onClick={this.getMarks} />
+			<input type="submit" id="submit-btn" value="Confirm" onClick={this.createDocument} />
 		</div>
 	)
 }

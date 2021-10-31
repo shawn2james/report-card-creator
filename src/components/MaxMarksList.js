@@ -14,7 +14,7 @@ const MaxMarksList = ({ userSubjects }) => (
 				{
 					userSubjects.map(subject => (
 						<div key={`dropdown-${subject}`} >
-							<select name="max-mark" id={`max-marks-${subject}`} className="max-mark">
+							<select name="max-mark" id={`max-marks-${subject.replace(" ", "-")}`} className="max-mark">
 								<option>20</option>
 								<option>25</option>
 								<option>40</option>

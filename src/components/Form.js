@@ -47,13 +47,18 @@ class Form extends React.Component {
 			restOfTheForm = (
 				<>
 					<div className="form-container" id="school-name-container">
-						<label htmlFor="schoolName">Enter school name:</label>
-						<input type="text" id="schoolName" required />
+						<label htmlFor="school-name">Enter school name:</label>
+						<input type="text" id="school-name" required />
+					</div>
+
+					<div className="form-container" id="secondary-heading-container">
+						<label htmlFor="secondary-heading">Enter secondary heading (Eg. Exam name) :</label>
+						<input type="text" id="secondary-heading" required />
 					</div>
 
 					<div className="form-container" id="class-name-container">
-						<label htmlFor="className">Enter class name:</label>
-						<input type="text" id="className" required />
+						<label htmlFor="class-name">Enter class name:</label>
+						<input type="text" id="class-name" required />
 					</div>
 
 					<RestOfTheForm students={this.state.students} subjects={this.state.subjects} marks={this.state.marks} />

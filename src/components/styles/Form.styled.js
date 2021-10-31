@@ -13,14 +13,14 @@ const StyledForm = styled.form`
 			margin: 35px 0;
 		}
 
-		#schoolName, #className, #spreadsheet {
+		input[type="text"], input[type="file"] {
 			font-size: 17px;
-			margin: 30px; 
+			margin: 15px; 
 			padding: 5px 10px;
 			border-radius: 5px;
 		}
 
-		#schoolName, #className {
+		input[type="text"] {
 			border: 1px solid black;
 		}
 
