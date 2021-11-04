@@ -1,38 +1,33 @@
-const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
-const fs = require('fs');
+const zip = require("express-zip");
 
 const app = express();
 const PORT = 3001;
-
 app.use(cors())
 
-const storage = multer.diskStorage({
-	destination: (req, file, callBack) => {
-		callBack(null, 'uploads')
+
+var storage = multer.diskStorage({
+	destination: function (req, file, callback) {
+		callback(null, 'uploads/');
 	},
-	filename: (req, file, callBack) => {
-		callBack(null, `spreadsheet.xlsx`)
+	filename: function (req, file, callback) {
+		callback(null, file.originalname);
 	}
-})
-
-let upload = multer({ storage: storage })
-
-app.get('/', function (req, res) {
-	// res.sendFile("/home/shawn/projects/report-card-creator/uploads/spreadsheet.xlsx");
-	res.sendFile(path.join(__dirname, '../uploads', 'spreadsheet.xlsx'));
 });
 
-app.post('/spreadsheet', upload.single('file'), (req, res, next) => {
-	const file = req.file;
-	if (!file) {
-		const error = new Error('No File')
-		error.httpStatusCode = 400
-		return next(error)
-	}
-	res.send(file);
+const upload = multer({ storage: storage });
+
+app.get('/', function (req, res) {
+	conosle.log("asdf");
+	res.zip([
+		{ path: 'uploads/Abhijith Shaji.docx', name: 'Abhijith Shaji.docx' }
+	]);
+});
+
+app.post('/document', upload.single("document"), (req, res) => {
+	res.end();
 })
 
 app.listen(PORT, () => {
