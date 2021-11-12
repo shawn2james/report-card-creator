@@ -3,7 +3,7 @@ import Subjects from "./Subjects";
 import Students from "./Students";
 import { Document, Packer } from "docx";
 import { primaryTitle, secondaryTitle, classNameTitle, studentNamePara, markTable } from "../docComponents";
-import axios from 'axios';
+import axios from "axios";
 
 class RestOfTheForm extends React.Component {
 	constructor(props) {
@@ -12,22 +12,22 @@ class RestOfTheForm extends React.Component {
 		this.state = {
 			userStudents: props.students,
 			userSubjects: props.subjects,
-		}
+		};
 	}
 
-	editSubjects = (e) => {
+	editSubjects() {
 		const checkedElements = Array.from(document.querySelectorAll(".subject")).filter(subjectCheckbox => subjectCheckbox.checked === true);
-		const checkedSubjects = checkedElements.map(ele => ele.id);
+		const checkedSubjects = checkedElements.map(   ele => ele.id);
 		this.setState({ userSubjects: checkedSubjects });
 	}
 
-	editStudents = (e) => {
+	editStudents() {
 		const checkedElements = Array.from(document.querySelectorAll(".student")).filter(studentCheckbox => studentCheckbox.checked === true);
 		const checkedStudents = checkedElements.map(ele => ele.id);
 		this.setState({ userStudents: checkedStudents });
 	}
 
-	getMarks = () => {
+	getMarks() {
 		let userMarks = [];
 
 		// get marks of selected students only
@@ -35,7 +35,7 @@ class RestOfTheForm extends React.Component {
 			if (this.state.userStudents.includes(student)) {
 				userMarks.push(this.props.marks[idx]);
 			}
-		})
+		});
 
 		// get marks of selected subjects only
 		userMarks = userMarks.map(markRow => {
@@ -44,7 +44,7 @@ class RestOfTheForm extends React.Component {
 				if (this.state.userSubjects.includes(subject)) {
 					newMarkRow.push(markRow[idx]);
 				}
-			})
+			});
 
 			return newMarkRow;
 		})
@@ -52,18 +52,18 @@ class RestOfTheForm extends React.Component {
 		return userMarks;
 	}
 
-	getMaxMarks = () => {
+	getMaxMarks() {
 		let maxMarks = [];
 
 		this.state.userSubjects.forEach(subject => {
 			const ele = document.querySelector(`#max-marks-${subject.replace(" ", "-")}`);
 			maxMarks.push(ele.value);
-		})
+		});
 
 		return maxMarks;
 	}
 
-	createDocument = (e) => {
+	createDocument(e) {
 		e.preventDefault();
 		const documents = [];
 
@@ -91,36 +91,38 @@ class RestOfTheForm extends React.Component {
 						tableDoc
 					]
 				}]
-			})
+			});
 
 			documents.push(doc);
-		})
+		});
 
 		documents.forEach((doc, idx) => {
 			Packer.toBlob(doc).then(blob => {
 				let fd = new FormData();
-				fd.append('document', blob, `${this.state.userStudents[idx]}.docx`);
+				fd.append("document", blob, `${this.state.userStudents[idx]}.docx`);
 				axios.post("http://localhost:3001/document", fd);
-			})
-		})
+			});
+		});
 	}
 
-	downloadDocuments = () => {
-		axios.get("http://localhost:3001").then((req, res) => {
-			console.log(res);
-		})
+	// downloadDocuments = () => {
+	//   axios.get("http://localhost:3001").then((req, res) => {
+	//     console.log(res)
+	//   })
+	// }
+
+	render () {
+		return (
+			<div>
+				<Students students={this.props.students} manageChange={this.editStudents} />
+				<Subjects subjects={this.props.subjects} userSubjects={this.state.userSubjects} manageChange={this.editSubjects} />
+
+
+				<input type="submit" id="submit-btn" value="Confirm" onClick={this.createDocument} />
+				<a href="http://localhost:3001"><button id="download-btn">Download</button></a>
+			</div>
+		);
 	}
-
-	render = () => (
-		<div>
-			<Students students={this.props.students} manageChange={this.editStudents} />
-			<Subjects subjects={this.props.subjects} userSubjects={this.state.userSubjects} manageChange={this.editSubjects} />
-
-
-			<input type="submit" id="submit-btn" value="Confirm" onClick={this.createDocument} />
-			<button id="download-btn" onClick={this.downloadDocuments}>Download</button>
-		</div>
-	)
 }
 
 export default RestOfTheForm;

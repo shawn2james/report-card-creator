@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
+import readXlsxFile from "read-excel-file";
 import StyledForm from "./styles/Form.styled";
-import readXlsxFile from 'read-excel-file';
-import RestOfTheForm from './RestOfTheForm';
+import RestOfTheForm from "./RestOfTheForm";
 
 class Form extends React.Component {
 	constructor() {
@@ -14,12 +14,12 @@ class Form extends React.Component {
 			subjects: [],
 			userSubjects: [],
 			marks: []
-		}
+		};
 	}
 
-	uploadFile = (e) => {
+	uploadFile(e) {
 		this.setState({ uploadText: <span>Uploading...</span> }, () => {
-			console.log("reading file...")
+			console.log("reading file...");
 			readXlsxFile(e.target.files[0])
 				.then(data => {
 					const firstValues = data.map(row => row[0]);
@@ -34,10 +34,10 @@ class Form extends React.Component {
 						userSubjects: data[0].slice(1),
 						marks: newMarks
 					}, () => {
-						this.setState({ uploadText: null })
-					})
-				})
-		})
+						this.setState({ uploadText: null });
+					});
+				});
+		});
 	}
 
 	render() {
@@ -81,7 +81,7 @@ class Form extends React.Component {
 					{restOfTheForm}
 				</fieldset>
 			</StyledForm >
-		)
+		);
 	}
 }
 

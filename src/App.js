@@ -1,8 +1,8 @@
-import GlobalStyles from './components/styles/Global.styled'
+import GlobalStyles from './components/styles/Global.styled';
 import Header from './components/Header';
 import Form from './components/Form';
 
-function App() {
+const App = () => {
   return (
     <div className="container">
       <GlobalStyles />
